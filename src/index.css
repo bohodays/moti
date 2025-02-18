@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Moneygraphy';
+  src: url('../src/assets/fonts/Moneygraphy-Pixel.otf') format('truetype');
+}
+
+body {
+  height: 100vh;
+  font-family: 'Moneygraphy';
+}
+
+#root {
+  height: 100vh;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox  */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 2px #404040;
+}
