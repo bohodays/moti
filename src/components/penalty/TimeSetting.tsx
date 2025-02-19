@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BackIcon, ExclamationMarkIcon } from '@components/Icons';
 import usePenaltyStore from '@store/penaltyStore';
+import { stepProps } from 'src/types/common';
 
-export type PropsParamType = {
-  onNext: (step: string) => void;
-};
-
-const TimeSetting = ({ onNext }: PropsParamType) => {
+const TimeSetting = ({ onNext }: stepProps) => {
   const { setTime } = usePenaltyStore();
 
   const hourInput = useRef<HTMLInputElement | null>(null);

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import Input from '@components/common/Input';
 import { BackIcon, ExclamationMarkIcon } from '@components/Icons';
-import Input from '@components/Input';
 import usePenaltyStore from '@store/penaltyStore';
-import { PropsParamType } from './TimeSetting';
+import { stepProps } from 'src/types/common';
 
-// TODO
-// 1. 입력
-const PenaltySetting = ({ onNext }: PropsParamType) => {
+const PenaltySetting = ({ onNext }: stepProps) => {
   const { penalty, setPenalty } = usePenaltyStore();
   const [customPenalty, setCustomPenalty] = useState('');
 

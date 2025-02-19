@@ -1,9 +1,9 @@
 import React from 'react';
 import { BackIcon, QuestionMark } from '@components/Icons';
 import usePenaltyStore from '@store/penaltyStore';
-import { PropsParamType } from './TimeSetting';
+import { stepProps } from 'src/types/common';
 
-const PenaltyChoice = ({ onNext }: PropsParamType) => {
+const PenaltyChoice = ({ onNext }: stepProps) => {
   const { setPenalty } = usePenaltyStore();
 
   const onPenaltySelect = (e: React.MouseEvent<HTMLButtonElement>) => {

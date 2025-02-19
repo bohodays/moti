@@ -1,11 +1,8 @@
 import React from 'react';
 import { ClockIcon } from '@components/Icons';
+import { stepProps } from 'src/types/common';
 
-export type PropsType = {
-  onNext: () => void;
-};
-
-const SubMain = ({ onNext }: PropsType) => {
+const SubMain = ({ onNext }: stepProps) => {
   return (
     <div className="flex h-lvh items-center justify-center">
       <div className="relative flex flex-col items-center justify-center">
@@ -19,7 +16,7 @@ const SubMain = ({ onNext }: PropsType) => {
 
       <div className="fixed bottom-5 left-1/2 flex -translate-x-1/2 flex-col bg-yellow-400">
         <button className="bg-yellow-700">목표를 달성했어요!</button>
-        <button className="bg-yellow-700" onClick={onNext}>
+        <button className="bg-yellow-700" onClick={() => onNext()}>
           {'친구랑 대결하기 >'}
         </button>
       </div>

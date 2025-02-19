@@ -2,9 +2,9 @@ import React from 'react';
 import { getPenaltyAll } from '@api/user';
 import { BackIcon, ExclamationMarkIcon, Match } from '@components/Icons';
 import usePenaltyStore from '@store/penaltyStore';
-import { PropsParamType } from './TimeSetting';
+import { stepProps } from 'src/types/common';
 
-const MatchLink = ({ onNext }: PropsParamType) => {
+const MatchLink = ({ onNext }: stepProps) => {
   const { penalty } = usePenaltyStore();
 
   const apiTest = async () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshIcon } from './Icons';
+import { RefreshIcon } from '@components/Icons';
 
 type InputProps = {
   value?: string;
