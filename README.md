@@ -12,3 +12,5 @@
 
 1. css 이미지 애니메이션 tailwinds로 적용해보기
 2. React-Query 적용해보기
+3. 각 페이지의 step을 enum 형태로 저장하기
+4. suspensive 라이브러리로 에러 처리하기

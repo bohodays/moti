@@ -9,3 +9,23 @@ export const getPenaltyAll = async () => {
     throw new Error('api error');
   }
 };
+
+export const getRandomNickname = async () => {
+  try {
+    const response = await axiosInstance.get('/api/v1/nickname');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
+export const getMajorCategoryAll = async () => {
+  try {
+    const response = await axiosInstance.get('/api/v1/major-category/all');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};

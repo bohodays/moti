@@ -12,3 +12,8 @@ export type ButtonProps = {
 export type stepProps = {
   onNext: (step?: string) => void;
 };
+
+export type majorCategory = {
+  id: number;
+  name: string;
+};

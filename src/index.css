@@ -16,10 +16,51 @@ body {
   height: 100vh;
 }
 
+.question-mark-slider {
+  .qeustion-mark-item {
+    opacity: 0;
+    animation: fadeMarkAnimation 8s infinite;
+  }
+}
+/* 각 이미지의 애니메이션 딜레이 적용 */
+.question-mark-slider .qeustion-mark-item:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.question-mark-slider .qeustion-mark-item:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.question-mark-slider .qeustion-mark-item:nth-child(3) {
+  animation-delay: 4s;
+}
+
+.question-mark-slider .qeustion-mark-item:nth-child(4) {
+  animation-delay: 6s;
+}
+
+@keyframes fadeMarkAnimation {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  } /* 페이드 인 */
+  30% {
+    opacity: 1;
+  } /* 유지 */
+  40% {
+    opacity: 0;
+  } /* 페이드 아웃 */
+  100% {
+    opacity: 0;
+  }
+}
+
 .image-slider {
   .image-item {
     opacity: 0;
-    animation: fadeAnimation 9s infinite;
+    animation: fadeAnimation 7.5s infinite;
   }
 }
 
@@ -29,11 +70,11 @@ body {
 }
 
 .image-slider .image-item:nth-child(2) {
-  animation-delay: 3s;
+  animation-delay: 2.5s;
 }
 
 .image-slider .image-item:nth-child(3) {
-  animation-delay: 6s;
+  animation-delay: 5s;
 }
 
 @keyframes fadeAnimation {
