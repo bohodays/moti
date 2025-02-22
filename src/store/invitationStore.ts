@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
 type invitationState = {
-  title: string;
+  title: string | null;
   description: string;
   taskRequestDto: {
-    majorCategoryId: number;
-    minorCategoryId: number;
+    majorCategoryId: number | null;
+    minorCategoryId: number | null;
     penaltyId: number;
     name: string;
     nickname: string;
@@ -14,14 +14,17 @@ type invitationState = {
   endTime: null | Date;
 
   setNickname: (nickname: string) => void;
+  setMajorCategoryId: (category: number | null) => void;
+  setMinorCategoryId: (category: number | null) => void;
+  setTitle: (title: string | null) => void;
 };
 
 const useInvitationStore = create<invitationState>(set => ({
-  title: '',
+  title: null,
   description: '',
   taskRequestDto: {
-    majorCategoryId: 0,
-    minorCategoryId: 0,
+    majorCategoryId: null,
+    minorCategoryId: null,
     penaltyId: 0,
     name: '',
     nickname: '',
@@ -36,6 +39,24 @@ const useInvitationStore = create<invitationState>(set => ({
         nickname,
       },
     })),
+
+  setMajorCategoryId: id =>
+    set(state => ({
+      taskRequestDto: {
+        ...state.taskRequestDto,
+        majorCategoryId: id,
+      },
+    })),
+
+  setMinorCategoryId: id =>
+    set(state => ({
+      taskRequestDto: {
+        ...state.taskRequestDto,
+        minorCategoryId: id,
+      },
+    })),
+
+  setTitle: (title: string | null) => set({ title }),
 }));
 
 export default useInvitationStore;

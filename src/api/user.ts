@@ -29,3 +29,23 @@ export const getMajorCategoryAll = async () => {
     throw new Error('api error');
   }
 };
+
+export const getMajorCategoryInfo = async (id: number) => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/major-category/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
+export const getMinorCategoryInfo = async (id: number) => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/minor-category/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};

@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 import { ButtonProps } from 'src/types/common';
 
 const Button = ({ text, onClick, customWrapperClassName, customButtonClassName }: ButtonProps) => {
-  const [buttonClassName, setButtonClassName] = useState(
-    'block h-[58px] w-[85%] rounded-[50px] bg-mainGreenColor text-[18px] text-mainBgColor'
-  );
-  const [buttonWrapperClassName, setButtonWrapperClassName] = useState(
-    'flex w-full flex-col items-center justify-center'
-  );
-
-  useEffect(() => {
-    if (customWrapperClassName) setButtonWrapperClassName(prev => `${prev} ${customWrapperClassName}`);
-    if (customButtonClassName) setButtonClassName(prev => `${prev} ${customButtonClassName}`);
-  }, [customWrapperClassName, customButtonClassName]);
-
   return (
-    <div className={buttonWrapperClassName}>
-      <button className={buttonClassName} onClick={onClick}>
+    <div className={twMerge('flex w-full flex-col items-center justify-center', customWrapperClassName)}>
+      <button
+        className={twMerge(
+          'block h-[58px] w-[85%] rounded-[50px] bg-green500 text-[18px] text-gray700 transition duration-300 ease-linear',
+          customButtonClassName
+        )}
+        onClick={onClick}
+      >
         {text}
       </button>
     </div>

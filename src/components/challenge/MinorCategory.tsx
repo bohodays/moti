@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { getMajorCategoryAll } from '@api/user';
+import { getMajorCategoryInfo } from '@api/user';
 import Button from '@components/common/Button';
 import { BackIcon, QuestionMark, QuestionMark1, QuestionMark2, QuestionMark3 } from '@components/Icons';
 import useInvitationStore from '@store/invitationStore';
-import { majorCategory, stepProps } from 'src/types/common';
+import { minorCategory, stepProps } from 'src/types/common';
 
-// TODO
-// 스크롤 생기는 경우 체크해야 됨
-
-const MajorCategory = ({ onNext }: stepProps) => {
-  const { setMajorCategoryId, title, setTitle } = useInvitationStore();
-  const [majorCategory, setMajorCategory] = useState<majorCategory[]>([]);
+export const MinorCategory = ({ onNext }: stepProps) => {
+  const { taskRequestDto, setMinorCategoryId } = useInvitationStore();
+  const [majorCategory, setMajorCategory] = useState('');
+  const [minorCategories, setMinorCategories] = useState<minorCategory[]>([]);
 
   const onStepNext = (id: number) => {
-    if (title) {
-      setTitle(null);
-    }
-    setMajorCategoryId(id);
+    setMinorCategoryId(id);
     onNext('next');
   };
 
   useEffect(() => {
     const onGetMajorCategoryAll = async () => {
-      const response = await getMajorCategoryAll();
-      setMajorCategory(response);
+      if (taskRequestDto.majorCategoryId) {
+        const response = await getMajorCategoryInfo(taskRequestDto.majorCategoryId);
+        setMajorCategory(response.major.name);
+        setMinorCategories(response.minorCategories);
+      }
     };
 
     onGetMajorCategoryAll();
@@ -38,9 +36,10 @@ const MajorCategory = ({ onNext }: stepProps) => {
         onClick={() => onNext('back')}
       />
       <div>
-        <div className="-translate-x-6 text-[32px] text-white">어떤 챌린지에</div>
-        <div className="question-mark-slider relative -translate-x-6 text-[32px] text-white">
-          관심이 가나요
+        <div className="text-center text-[22px] text-white opacity-80">{majorCategory}</div>
+        <div className="mt-2 text-center text-[32px] text-white">이런 챌린지로</div>
+        <div className="question-mark-slider relative -translate-x-2 text-center text-[32px] text-white">
+          도전해 보는거 어때요
           <QuestionMark
             className="qeustion-mark-item absolute right-[-44px] top-[50%] -translate-y-[50%]"
             width={40}
@@ -65,8 +64,8 @@ const MajorCategory = ({ onNext }: stepProps) => {
       </div>
 
       <div className="flex w-full flex-col gap-[20px]">
-        {majorCategory.length &&
-          majorCategory.map(item => (
+        {minorCategories.length &&
+          minorCategories.map(item => (
             <div key={item.id} className="w-ful">
               <Button
                 text={item.name}
@@ -76,14 +75,6 @@ const MajorCategory = ({ onNext }: stepProps) => {
             </div>
           ))}
       </div>
-
-      <div>
-        <button className="text-white" onClick={() => onNext('2stepNext')}>
-          직접 작성할래요
-        </button>
-      </div>
     </div>
   );
 };
-
-export default MajorCategory;

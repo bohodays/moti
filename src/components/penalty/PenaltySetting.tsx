@@ -26,15 +26,15 @@ const PenaltySetting = ({ onNext }: stepProps) => {
         onClick={() => onNext('back')}
       />
       <div className="flex flex-col items-center justify-center">
-        <div className="-translate-x-6 text-[32px] text-mainTextWhiteColor">기억에 남을</div>
-        <div className="text-[32px] text-mainTextWhiteColor">
+        <div className="-translate-x-6 text-[32px] text-white">기억에 남을</div>
+        <div className="text-[32px] text-white">
           벌칙을 정해주세요 <ExclamationMarkIcon className="inline -translate-x-[5px]" width={40} height={40} />
         </div>
       </div>
 
       <div className="w-full">
         <Input maxLength={40} value={customPenalty} onChange={e => setCustomPenalty(e.target.value)} />
-        <button className="pl-6 pt-2 text-[#C0C0C0]" onClick={() => onNext('back')}>
+        <button className="pl-6 pt-2 text-gray300" onClick={() => onNext('back')}>
           {'벌칙을 정해주세요 >'}
         </button>
       </div>

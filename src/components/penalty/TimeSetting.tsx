@@ -49,17 +49,17 @@ const TimeSetting = ({ onNext }: stepProps) => {
         onClick={() => onNext('back')}
       />
       <div className="relative flex flex-col items-center justify-center">
-        <div className="mb-[32px] text-[32px] text-mainTextWhiteColor">
+        <div className="mb-[32px] text-[32px] text-white">
           대결 시간을 정해주세요 <ExclamationMarkIcon className="inline -translate-x-[5px]" width={40} height={40} />
         </div>
-        <div className="flex gap-8 text-[22px] text-mainTextWhiteColor">
+        <div className="flex gap-8 text-[22px] text-white">
           <div className="flex items-center justify-center">
             <input
               id="hour"
               type="number"
               value={hour}
               ref={hourInput}
-              className="mr-[8px] h-[48px] w-[68px] rounded-[24px] border-none bg-[#404040] text-center text-[30px] caret-transparent outline-none focus:text-mainGreenColor"
+              className="mr-[8px] h-[48px] w-[68px] rounded-[24px] border-none bg-gray600 text-center text-[30px] caret-transparent outline-none focus:text-green500"
               onChange={e => onValidationTime('hour', e.target.value)}
             />
             <label className="text-[30px] text-[#9C9C9C]" htmlFor="hour">
@@ -71,7 +71,7 @@ const TimeSetting = ({ onNext }: stepProps) => {
               id="minute"
               type="number"
               value={min.toString().padStart(2, '0')}
-              className="mr-[8px] h-[48px] w-[68px] rounded-[24px] border-none bg-[#404040] text-center text-[30px] caret-transparent outline-none focus:text-mainGreenColor"
+              className="mr-[8px] h-[48px] w-[68px] rounded-[24px] border-none bg-gray600 text-center text-[30px] caret-transparent outline-none focus:text-green500"
               onChange={e => onValidationTime('min', e.target.value)}
             />
             <label className="text-[30px] text-[#9C9C9C]" htmlFor="minute">

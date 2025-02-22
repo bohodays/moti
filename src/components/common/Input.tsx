@@ -18,7 +18,7 @@ const Input = ({ value, placeholder, isRefresh, onRefresh, maxLength, onChange }
           type="text"
           placeholder={placeholder}
           value={value}
-          className={`h-14 w-full border-b-4 border-mainGreenColor bg-mainBgColor text-mainTextWhiteColor ${isRefresh ? 'pr-8' : 'pr-0'} text-2xl caret-transparent focus:outline-none`}
+          className={`h-14 w-full border-b-4 border-green500 bg-gray700 text-white ${isRefresh ? 'pr-8' : 'pr-0'} text-2xl caret-transparent focus:outline-none`}
           maxLength={maxLength}
           onChange={onChange}
         />

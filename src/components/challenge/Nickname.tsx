@@ -33,7 +33,7 @@ const Nickname = ({ onNext }: stepProps) => {
         onClick={() => onNext('back')}
       />
       <div className="relative flex flex-col items-center justify-center">
-        <div className="mb-[32px] text-[32px] text-mainTextWhiteColor">
+        <div className="mb-[32px] text-[32px] text-white">
           닉네임을 입력해주세요 <ExclamationMarkIcon className="inline -translate-x-[5px]" width={40} height={40} />
         </div>
       </div>
@@ -46,7 +46,7 @@ const Nickname = ({ onNext }: stepProps) => {
           onChange={e => setNickname(e.target.value)}
           onRefresh={onGetRandomNickname}
         />
-        <div className="pl-6 pt-2 text-[#C0C0C0]">{`${nickname.length} / 12자`}</div>
+        <div className="pl-6 pt-2 text-gray300">{`${nickname.length} / 12자`}</div>
       </div>
 
       <Button text="다음" customWrapperClassName="absolute bottom-10" onClick={onStepNext} />

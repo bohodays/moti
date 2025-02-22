@@ -17,3 +17,8 @@ export type majorCategory = {
   id: number;
   name: string;
 };
+
+export type minorCategory = {
+  id: number;
+  name: string;
+};

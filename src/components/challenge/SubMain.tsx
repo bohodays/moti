@@ -8,8 +8,8 @@ const SubMain = ({ onNext }: stepProps) => {
     <div className="flex h-lvh items-center justify-center">
       <div className="relative flex w-full flex-col items-center justify-center gap-40">
         <div>
-          <div className="text-center text-[28px] text-mainTextWhiteColor">오늘은 어떤 목표로</div>
-          <div className="text-center text-[28px] text-mainTextWhiteColor">짜릿한 성취감을 느껴볼까요?</div>
+          <div className="text-center text-[28px] text-white">오늘은 어떤 목표로</div>
+          <div className="text-center text-[28px] text-white">짜릿한 성취감을 느껴볼까요?</div>
         </div>
         <div className="image-slider relative">
           <Mask1
