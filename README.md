@@ -8,6 +8,12 @@
 
 <br>
 
+2. 토스의 퍼널 구조 적용
+
+- https://www.youtube.com/watch?v=NwLWX2RNVcw&t=436s
+
+<br>
+
 ### TODO
 
 - [x] vercel proxy 설정
