@@ -1,9 +1,9 @@
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }],
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "http://3.36.160.101:8080/api/:path*"
     }
-  ]
+  ],
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }
