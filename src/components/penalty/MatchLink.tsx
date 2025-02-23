@@ -1,16 +1,42 @@
-import React from 'react';
-import { getPenaltyAll } from '@api/user';
+import React, { useEffect, useState } from 'react';
+import { getMinorCategoryInfo, getPenaltyInfo } from '@api/user';
+import Button from '@components/common/Button';
 import { BackIcon, ExclamationMarkIcon, Match } from '@components/Icons';
-import usePenaltyStore from '@store/penaltyStore';
+import useInvitationStore from '@store/invitationStore';
 import { stepProps } from 'src/types/common';
 
 const MatchLink = ({ onNext }: stepProps) => {
-  const { penalty } = usePenaltyStore();
+  const { title, taskRequestDto, endTime } = useInvitationStore();
+  const [category, setCategory] = useState('');
+  const [penalty, setPenalty] = useState('');
 
-  const apiTest = async () => {
-    const response = await getPenaltyAll();
-    console.log({ response });
+  const onGetMajorCategoryAll = async () => {
+    if (taskRequestDto.minorCategoryId) {
+      const response = await getMinorCategoryInfo(taskRequestDto.minorCategoryId);
+      setCategory(response.name);
+    }
   };
+
+  const onGetPenaltyInfo = async () => {
+    if (taskRequestDto.penaltyId) {
+      const response = await getPenaltyInfo(taskRequestDto.penaltyId);
+      setPenalty(response.name);
+    }
+  };
+
+  useEffect(() => {
+    if (title) {
+      setCategory(title);
+    } else {
+      onGetMajorCategoryAll();
+    }
+
+    if (taskRequestDto.penaltyName) {
+      setPenalty(taskRequestDto.penaltyName);
+    } else {
+      onGetPenaltyInfo();
+    }
+  }, []);
 
   return (
     <div className="relative flex h-lvh flex-col items-center justify-center gap-[80px]">
@@ -33,7 +59,7 @@ const MatchLink = ({ onNext }: stepProps) => {
         <div className="px-8 text-[18px]">
           <div className="text-gray300">챌린지 주제</div>
           {/* 영률팀 파트에서 정보 받아야 됨 */}
-          <div className="text-white">아무도 안 할 것 같은 재밌는 챌린지</div>
+          <div className="text-white">{category}</div>
         </div>
         <div className="px-8 text-[18px]">
           <div className="text-gray300">벌칙 내용</div>
@@ -41,15 +67,11 @@ const MatchLink = ({ onNext }: stepProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-5 left-1/2 flex -translate-x-1/2 flex-col bg-yellow-400">
-        <button
-          className="bg-yellow-700"
-          // onClick={() => onNext('next')}
-          onClick={apiTest}
-        >
-          링크 공유하기
-        </button>
-      </div>
+      <Button
+        text="링크 공유하기"
+        customWrapperClassName="absolute bottom-10"
+        onClick={() => console.log({ title, taskRequestDto, endTime })}
+      />
     </div>
   );
 };

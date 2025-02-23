@@ -18,13 +18,21 @@ const PenaltyPage = () => {
         <TimeSetting onNext={cmd => (cmd === 'next' ? setStep('penaltyChoice') : setStep('subMain'))} />
       )}
       {step === 'penaltyChoice' && (
-        <PenaltyChoice onNext={cmd => (cmd === 'next' ? setStep('penaltySetting') : setStep('timeSetting'))} />
+        <PenaltyChoice
+          onNext={cmd =>
+            cmd === '2stepNexp'
+              ? setStep('matchLink')
+              : cmd === 'next'
+                ? setStep('penaltySetting')
+                : setStep('timeSetting')
+          }
+        />
       )}
       {step === 'penaltySetting' && (
         <PenaltySetting onNext={cmd => (cmd === 'next' ? setStep('matchLink') : setStep('penaltyChoice'))} />
       )}
       {step === 'matchLink' && (
-        <MatchLink onNext={cmd => (cmd === 'next' ? setStep('matchLink') : setStep('penaltySetting'))} />
+        <MatchLink onNext={cmd => (cmd === 'next' ? setStep('matchLink') : setStep('penaltyChoice'))} />
       )}
     </div>
   );

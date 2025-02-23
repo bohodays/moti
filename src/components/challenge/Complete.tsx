@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getMinorCategoryInfo } from '@api/user';
 import Button from '@components/common/Button';
 import { BackIcon, ExclamationMarkIcon } from '@components/Icons';
@@ -8,9 +9,13 @@ import { stepProps } from 'src/types/common';
 const Complete = ({ onNext }: stepProps) => {
   const { title, taskRequestDto } = useInvitationStore();
   const [mainTitle, setMainTitle] = useState('');
+  const navigate = useNavigate();
+
+  const onMoveNextPage = () => {
+    navigate('/penalty');
+  };
 
   useEffect(() => {
-    console.log({ taskRequestDto });
     if (title) {
       setMainTitle(title);
     } else {
@@ -45,7 +50,7 @@ const Complete = ({ onNext }: stepProps) => {
           text="완료"
           customWrapperClassName="w-[35%]"
           customButtonClassName="w-[90%] bg-white"
-          onClick={() => onNext('next')}
+          onClick={onMoveNextPage}
         />
         <Button
           text="친구랑 대결하기"

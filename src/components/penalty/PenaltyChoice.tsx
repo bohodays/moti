@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getPenaltyAll } from '@api/user';
+import Button from '@components/common/Button';
 import { BackIcon, QuestionMark } from '@components/Icons';
-import usePenaltyStore from '@store/penaltyStore';
-import { stepProps } from 'src/types/common';
+import useInvitationStore from '@store/invitationStore';
+import { minorCategory, stepProps } from 'src/types/common';
 
 const PenaltyChoice = ({ onNext }: stepProps) => {
-  const { setPenalty } = usePenaltyStore();
+  const { setPenaltyId, setPenaltyName } = useInvitationStore();
+  const [penalties, setPenalties] = useState<minorCategory[]>([]);
 
-  const onPenaltySelect = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const penalty = e.currentTarget.innerText;
-    setPenalty(penalty);
-    onNext('next');
+  const onStepNext = (type: string, id = 0) => {
+    if (type === 'custom') {
+      setPenaltyId(null);
+      onNext('next');
+    } else {
+      setPenaltyId(id);
+      setPenaltyName(null);
+      onNext('2stepNexp');
+    }
   };
 
-  const onStepNext = () => {
-    setPenalty('');
-    onNext('next');
+  const getPenalties = async () => {
+    const response = await getPenaltyAll();
+    setPenalties(response);
   };
+
+  useEffect(() => {
+    getPenalties();
+  }, []);
 
   return (
     <div className="relative flex h-lvh flex-col items-center justify-center gap-[30px]">
@@ -32,41 +44,26 @@ const PenaltyChoice = ({ onNext }: stepProps) => {
         </div>
       </div>
 
-      <div className="flex w-full flex-col items-center justify-center gap-[20px]">
-        <button
-          className="block h-[52px] w-[85%] rounded-[12px] bg-gray600 text-white transition duration-300 ease-linear hover:bg-white hover:text-gray700"
-          onClick={onPenaltySelect}
-        >
-          재밌는 소품이나 옷을 입고 인스타에 올리기
-        </button>
-        <button
-          className="block h-[52px] w-[85%] rounded-[12px] bg-gray600 text-white transition duration-300 ease-linear hover:bg-white hover:text-gray700"
-          onClick={onPenaltySelect}
-        >
-          엉뚱한 문구로 랜덤 카톡 보내기
-        </button>
-        <button
-          className="block h-[52px] w-[85%] rounded-[12px] bg-gray600 text-white transition duration-300 ease-linear hover:bg-white hover:text-gray700"
-          onClick={onPenaltySelect}
-        >
-          유행하는 릴스 찍기
-        </button>
-        <button
-          className="block h-[52px] w-[85%] rounded-[12px] bg-gray600 text-white transition duration-300 ease-linear hover:bg-white hover:text-gray700"
-          onClick={onPenaltySelect}
-        >
-          정해주는 음식 먹기
-        </button>
-        <button
-          className="block h-[52px] w-[85%] rounded-[12px] bg-gray600 text-white transition duration-300 ease-linear hover:bg-white hover:text-gray700"
-          onClick={onPenaltySelect}
-        >
-          이긴 사람한테 5,000원 보내주기
-        </button>
+      {/* 스크롤 어떻게 구현할지 고민하기 */}
+      <div
+        className="flex h-[480px] w-full flex-col items-center justify-center gap-[20px] overflow-y-auto"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
+        {penalties.map(item => (
+          <Button
+            key={item.id}
+            text={item.name}
+            customButtonClassName="hover:text-gray700  bg-gray600 block h-[62px] rounded-[12px] text-white transition duration-300 ease-linear hover:bg-white"
+            onClick={() => onStepNext('select', item.id)}
+          />
+        ))}
       </div>
 
       <div>
-        <button className="text-white" onClick={onStepNext}>
+        <button className="text-white" onClick={() => onStepNext('custom')}>
           직접 작성할래요
         </button>
       </div>

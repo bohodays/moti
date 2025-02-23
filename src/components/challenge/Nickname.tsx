@@ -7,12 +7,16 @@ import useInvitationStore from '@store/invitationStore';
 import { stepProps } from 'src/types/common';
 
 const Nickname = ({ onNext }: stepProps) => {
-  const { setNickname: updateNickname } = useInvitationStore();
+  const { taskRequestDto, setNickname: updateNickname } = useInvitationStore();
   const [nickname, setNickname] = useState('');
 
   const onGetRandomNickname = async () => {
-    const response = await getRandomNickname();
-    setNickname(response);
+    if (taskRequestDto.nickname) {
+      setNickname(taskRequestDto.nickname);
+    } else {
+      const response = await getRandomNickname();
+      setNickname(response);
+    }
   };
 
   const onStepNext = () => {

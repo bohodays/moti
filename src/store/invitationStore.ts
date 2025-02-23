@@ -2,14 +2,14 @@ import { create } from 'zustand';
 
 type invitationState = {
   title: string | null;
-  description: string;
+  description: string | null;
   taskRequestDto: {
     majorCategoryId: number | null;
     minorCategoryId: number | null;
-    penaltyId: number;
-    name: string;
-    nickname: string;
-    penaltyName: string;
+    penaltyId: number | null;
+    name: string | null;
+    nickname: string | null;
+    penaltyName: string | null;
   };
   endTime: null | Date;
 
@@ -17,18 +17,21 @@ type invitationState = {
   setMajorCategoryId: (category: number | null) => void;
   setMinorCategoryId: (category: number | null) => void;
   setTitle: (title: string | null) => void;
+  setEndTime: (time: Date) => void;
+  setPenaltyId: (id: number | null) => void;
+  setPenaltyName: (penalty: string | null) => void;
 };
 
 const useInvitationStore = create<invitationState>(set => ({
   title: null,
-  description: '',
+  description: null,
   taskRequestDto: {
     majorCategoryId: null,
     minorCategoryId: null,
-    penaltyId: 0,
-    name: '',
-    nickname: '',
-    penaltyName: '',
+    penaltyId: null,
+    name: null,
+    nickname: null,
+    penaltyName: null,
   },
   endTime: null,
 
@@ -57,6 +60,24 @@ const useInvitationStore = create<invitationState>(set => ({
     })),
 
   setTitle: (title: string | null) => set({ title }),
+
+  setEndTime: time => set({ endTime: time }),
+
+  setPenaltyId: id =>
+    set(state => ({
+      taskRequestDto: {
+        ...state.taskRequestDto,
+        penaltyId: id,
+      },
+    })),
+
+  setPenaltyName: penalty =>
+    set(state => ({
+      taskRequestDto: {
+        ...state.taskRequestDto,
+        penaltyName: penalty,
+      },
+    })),
 }));
 
 export default useInvitationStore;

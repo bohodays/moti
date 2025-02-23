@@ -3,7 +3,7 @@ import axiosInstance from './axiosInstance';
 export const getPenaltyAll = async () => {
   try {
     const response = await axiosInstance.get('/api/v1/penalty/all');
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error);
     throw new Error('api error');
@@ -43,6 +43,16 @@ export const getMajorCategoryInfo = async (id: number) => {
 export const getMinorCategoryInfo = async (id: number) => {
   try {
     const response = await axiosInstance.get(`/api/v1/minor-category/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
+export const getPenaltyInfo = async (id: number) => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/penalty/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);

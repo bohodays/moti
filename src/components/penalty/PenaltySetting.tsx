@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 import { BackIcon, ExclamationMarkIcon } from '@components/Icons';
-import usePenaltyStore from '@store/penaltyStore';
+import useInvitationStore from '@store/invitationStore';
 import { stepProps } from 'src/types/common';
 
 const PenaltySetting = ({ onNext }: stepProps) => {
-  const { penalty, setPenalty } = usePenaltyStore();
+  const { setPenaltyName, setPenaltyId } = useInvitationStore();
   const [customPenalty, setCustomPenalty] = useState('');
 
   const onStepNext = () => {
-    setPenalty(customPenalty);
-    onNext('next');
+    if (customPenalty) {
+      setPenaltyName(customPenalty);
+      setPenaltyId(null);
+      onNext('next');
+    }
   };
 
-  useEffect(() => {
-    setCustomPenalty(penalty);
-  }, []);
-
   return (
-    <div className="relative flex h-lvh flex-col items-center justify-center gap-[30px]">
+    <div className="relative flex h-lvh flex-col items-center justify-start gap-[100px] pt-36">
       <BackIcon
         width={45}
         height={45}
@@ -39,11 +39,7 @@ const PenaltySetting = ({ onNext }: stepProps) => {
         </button>
       </div>
 
-      <div className="fixed bottom-5 left-1/2 flex -translate-x-1/2 flex-col bg-yellow-400">
-        <button className="bg-yellow-700" onClick={onStepNext}>
-          다음
-        </button>
-      </div>
+      <Button text="다음" customWrapperClassName="absolute bottom-10" onClick={onStepNext} />
     </div>
   );
 };

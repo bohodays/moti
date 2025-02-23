@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Button from '@components/common/Button';
 import { BackIcon, ExclamationMarkIcon } from '@components/Icons';
-import usePenaltyStore from '@store/penaltyStore';
+import useInvitationStore from '@store/invitationStore';
 import { stepProps } from 'src/types/common';
 
 const TimeSetting = ({ onNext }: stepProps) => {
-  const { setTime } = usePenaltyStore();
+  const { setEndTime } = useInvitationStore();
 
   const hourInput = useRef<HTMLInputElement | null>(null);
   const [hour, setHour] = useState<number>(24);
@@ -32,7 +33,9 @@ const TimeSetting = ({ onNext }: stepProps) => {
   };
 
   const onStepNext = () => {
-    setTime([hour, min]);
+    const now = new Date();
+    now.setHours(hour, min, 0, 0);
+    setEndTime(now);
     onNext('next');
   };
 
@@ -41,7 +44,7 @@ const TimeSetting = ({ onNext }: stepProps) => {
   }, []);
 
   return (
-    <div className="relative flex h-lvh items-center justify-center">
+    <div className="relative flex h-lvh flex-col items-center justify-start gap-[100px] pt-36">
       <BackIcon
         width={45}
         height={45}
@@ -49,7 +52,7 @@ const TimeSetting = ({ onNext }: stepProps) => {
         onClick={() => onNext('back')}
       />
       <div className="relative flex flex-col items-center justify-center">
-        <div className="mb-[32px] text-[32px] text-white">
+        <div className="mb-[62px] text-[32px] text-white">
           대결 시간을 정해주세요 <ExclamationMarkIcon className="inline -translate-x-[5px]" width={40} height={40} />
         </div>
         <div className="flex gap-8 text-[22px] text-white">
@@ -81,11 +84,7 @@ const TimeSetting = ({ onNext }: stepProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-5 left-1/2 flex -translate-x-1/2 flex-col bg-yellow-400">
-        <button className="bg-yellow-700" onClick={onStepNext}>
-          다음
-        </button>
-      </div>
+      <Button text="다음" customWrapperClassName="absolute bottom-10" onClick={onStepNext} />
     </div>
   );
 };
