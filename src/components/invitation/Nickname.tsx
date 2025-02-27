@@ -3,11 +3,11 @@ import { getRandomNickname } from '@api/user';
 import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 import { BackIcon, ExclamationMarkIcon } from '@components/Icons';
-import useInvitationStore from '@store/invitationStore';
+import useInvitedStore from '@store/invitedStore';
 import { stepProps } from 'src/types/common';
 
 const Nickname = ({ onNext }: stepProps) => {
-  const { taskRequestDto, setNickname: updateNickname } = useInvitationStore();
+  const { myNickname, setMyNickname } = useInvitedStore();
   const [nickname, setNickname] = useState('');
 
   const onGetRandomNickname = async () => {
@@ -16,16 +16,13 @@ const Nickname = ({ onNext }: stepProps) => {
   };
 
   const onStepNext = () => {
-    if (updateNickname) {
-      updateNickname(nickname);
-      onNext('next');
-    }
+    setMyNickname(nickname);
+    onNext('next');
   };
 
   useEffect(() => {
-    if (taskRequestDto.nickname) {
-      setNickname(taskRequestDto.nickname);
-    } else {
+    if (myNickname) setNickname(myNickname);
+    else {
       onGetRandomNickname();
     }
   }, []);

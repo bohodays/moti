@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type invitationState = {
+export type invitationState = {
   title: string | null;
   description: string | null;
   taskRequestDto: {
@@ -11,15 +11,15 @@ type invitationState = {
     nickname: string | null;
     penaltyName: string | null;
   };
-  endTime: null | Date;
+  endTime: number | null;
 
-  setNickname: (nickname: string) => void;
-  setMajorCategoryId: (category: number | null) => void;
-  setMinorCategoryId: (category: number | null) => void;
-  setTitle: (title: string | null) => void;
-  setEndTime: (time: Date) => void;
-  setPenaltyId: (id: number | null) => void;
-  setPenaltyName: (penalty: string | null) => void;
+  setNickname?: (nickname: string) => void;
+  setMajorCategoryId?: (category: number | null) => void;
+  setMinorCategoryId?: (category: number | null) => void;
+  setTitle?: (title: string | null) => void;
+  setEndTime?: (time: number | null) => void;
+  setPenaltyId?: (id: number | null) => void;
+  setPenaltyName?: (penalty: string | null) => void;
 };
 
 const useInvitationStore = create<invitationState>(set => ({

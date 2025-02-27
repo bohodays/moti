@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getMinorCategoryInfo, getPenaltyInfo } from '@api/user';
+import { getMinorCategoryInfo, getPenaltyInfo, postInvitation } from '@api/user';
 import Button from '@components/common/Button';
 import { BackIcon, ExclamationMarkIcon, Match } from '@components/Icons';
 import useInvitationStore from '@store/invitationStore';
 import { stepProps } from 'src/types/common';
 
 const MatchLink = ({ onNext }: stepProps) => {
-  const { title, taskRequestDto, endTime } = useInvitationStore();
+  const { title, description, taskRequestDto } = useInvitationStore();
   const [category, setCategory] = useState('');
   const [penalty, setPenalty] = useState('');
 
@@ -21,6 +21,24 @@ const MatchLink = ({ onNext }: stepProps) => {
     if (taskRequestDto.penaltyId) {
       const response = await getPenaltyInfo(taskRequestDto.penaltyId);
       setPenalty(response.name);
+    }
+  };
+
+  const onMakeLink = async () => {
+    const response = await postInvitation({ title, description, taskRequestDto, endTime: null });
+
+    console.log({ response });
+    // TODO 도메인 주소 변수로 저장하기
+    // TODO alert를 toast로 변경하기
+    // const link = `https://moti-beta.vercel.app/${response.response.uuid}`; // 배포주소
+    const link = `http://localhost:5173/${response.response.uuid}`; // 로컬주소
+
+    try {
+      await navigator.clipboard.writeText(link);
+      alert('복사에 성공했습니다.');
+    } catch (error) {
+      console.error('클립보드 복사 실패', error);
+      alert('복사에 실패했습니다.');
     }
   };
 
@@ -58,7 +76,6 @@ const MatchLink = ({ onNext }: stepProps) => {
         <Match className="absolute -top-11 left-1/2 -translate-x-1/2" width={90} height={90} />
         <div className="px-8 text-[18px]">
           <div className="text-gray300">챌린지 주제</div>
-          {/* 영률팀 파트에서 정보 받아야 됨 */}
           <div className="text-white">{category}</div>
         </div>
         <div className="px-8 text-[18px]">
@@ -67,11 +84,7 @@ const MatchLink = ({ onNext }: stepProps) => {
         </div>
       </div>
 
-      <Button
-        text="링크 공유하기"
-        customWrapperClassName="absolute bottom-10"
-        onClick={() => console.log({ title, taskRequestDto, endTime })}
-      />
+      <Button text="링크 공유하기" customWrapperClassName="absolute bottom-10" onClick={onMakeLink} />
     </div>
   );
 };

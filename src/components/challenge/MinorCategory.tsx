@@ -11,8 +11,10 @@ export const MinorCategory = ({ onNext }: stepProps) => {
   const [minorCategories, setMinorCategories] = useState<minorCategory[]>([]);
 
   const onStepNext = (id: number) => {
-    setMinorCategoryId(id);
-    onNext('next');
+    if (setMinorCategoryId) {
+      setMinorCategoryId(id);
+      onNext('next');
+    }
   };
 
   useEffect(() => {

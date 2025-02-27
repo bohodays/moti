@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './layout/Layout';
-import ChallengePage from './pages/ChallengePage';
-import PenaltyPage from './pages/PenaltyPage';
+import Layout from 'src/layout/Layout';
+import ChallengePage from 'src/pages/ChallengePage';
+import PenaltyPage from 'src/pages/PenaltyPage';
 
-const Router = () => {
+const InviteRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -13,8 +13,6 @@ const Router = () => {
 
           <Route path="/penalty" element={<PenaltyPage />} />
 
-          <Route path="/yerin" element={<div>예린님 파트</div>} />
-
           <Route path="*" element={<div>Not Found</div>} />
         </Route>
       </Routes>
@@ -22,4 +20,4 @@ const Router = () => {
   );
 };
 
-export default Router;
+export default InviteRouter;

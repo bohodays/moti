@@ -33,10 +33,10 @@ const TimeSetting = ({ onNext }: stepProps) => {
   };
 
   const onStepNext = () => {
-    const now = new Date();
-    now.setHours(hour, min, 0, 0);
-    setEndTime(now);
-    onNext('next');
+    if (setEndTime) {
+      setEndTime(hour * 60 + min);
+      onNext('next');
+    }
   };
 
   useEffect(() => {

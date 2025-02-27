@@ -1,3 +1,4 @@
+import { invitationState } from '@store/invitationStore';
 import axiosInstance from './axiosInstance';
 
 export const getPenaltyAll = async () => {
@@ -53,6 +54,26 @@ export const getMinorCategoryInfo = async (id: number) => {
 export const getPenaltyInfo = async (id: number) => {
   try {
     const response = await axiosInstance.get(`/v1/penalty/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
+export const postInvitation = async (invitationInfo: invitationState) => {
+  try {
+    const response = await axiosInstance.post('/v1/invitation', invitationInfo);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
+export const getInvitationInfo = async (uuid: string) => {
+  try {
+    const response = await axiosInstance.get(`/v1/invitation/${uuid}`);
     return response.data;
   } catch (error) {
     console.error(error);

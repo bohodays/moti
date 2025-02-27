@@ -6,7 +6,6 @@ import SubMain from '@components/penalty/SubMain';
 import TimeSetting from '@components/penalty/TimeSetting';
 
 const PenaltyPage = () => {
-  // const [registerData, setRegisterData] = useState();
   const [step, setStep] = useState<'subMain' | 'timeSetting' | 'penaltyChoice' | 'penaltySetting' | 'matchLink'>(
     'subMain'
   );
