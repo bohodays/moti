@@ -22,3 +22,17 @@ export type minorCategory = {
   id: number;
   name: string;
 };
+
+export type invitationType = {
+  title: string | null;
+  description: string | null;
+  taskRequestDto: {
+    majorCategoryId: number | null;
+    minorCategoryId: number | null;
+    penaltyId: number | null;
+    name: string | null;
+    nickname: string | null;
+    penaltyName: string | null;
+  };
+  endTime: number | null;
+};

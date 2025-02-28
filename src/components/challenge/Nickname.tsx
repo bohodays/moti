@@ -16,10 +16,8 @@ const Nickname = ({ onNext }: stepProps) => {
   };
 
   const onStepNext = () => {
-    if (updateNickname) {
-      updateNickname(nickname);
-      onNext('next');
-    }
+    updateNickname(nickname);
+    onNext('next');
   };
 
   useEffect(() => {

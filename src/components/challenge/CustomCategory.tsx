@@ -11,12 +11,10 @@ const CustomCategory = ({ onNext }: stepProps) => {
 
   const onStepNext = () => {
     if (customCategory.length) {
-      if (setTitle && setMajorCategoryId && setMinorCategoryId) {
-        setMajorCategoryId(null);
-        setMinorCategoryId(null);
-        setTitle(customCategory);
-        onNext('next');
-      }
+      setMajorCategoryId(null);
+      setMinorCategoryId(null);
+      setTitle(customCategory);
+      onNext('next');
     }
   };
 

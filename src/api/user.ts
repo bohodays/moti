@@ -1,4 +1,4 @@
-import { invitationState } from '@store/invitationStore';
+import { invitationType } from 'src/types/common';
 import axiosInstance from './axiosInstance';
 
 export const getPenaltyAll = async () => {
@@ -61,7 +61,7 @@ export const getPenaltyInfo = async (id: number) => {
   }
 };
 
-export const postInvitation = async (invitationInfo: invitationState) => {
+export const postInvitation = async (invitationInfo: invitationType) => {
   try {
     const response = await axiosInstance.post('/v1/invitation', invitationInfo);
     return response.data;
