@@ -18,6 +18,7 @@
 
 - [x] vercel proxy 설정
   - 로컬 환경에서 정상적으로 api요청 및 응답을 받았지만 배포되면 proxy 설정에 문제가 생겼음. vercel.json에 proxy 설정을 해야 된다는 것을 확인 후 적용함.
+- [ ] 배포 환경과 개발 환경에서 환경변수 분리하기
 - [ ] css 이미지 애니메이션 tailwinds로 적용해보기
 - [ ] React-Query 적용해보기
 - [ ] 각 페이지의 step을 enum 형태로 저장하기
