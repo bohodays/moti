@@ -81,6 +81,16 @@ export const getInvitationInfo = async (uuid: string) => {
   }
 };
 
+export const putInvitationInfo = async (uuid: string, order: number) => {
+  try {
+    const response = await axiosInstance.put(`/v1/invitation/${uuid}/task/${order}`, { uuid, order });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
 export const postRivalInvitation = async (uuid: string, rivalInvitationInfo: rivalInvitationType) => {
   try {
     const response = await axiosInstance.post(`/v1/invitation/${uuid}/task/1`, rivalInvitationInfo);

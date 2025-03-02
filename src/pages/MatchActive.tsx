@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getInvitationInfo, getMinorCategoryInfo } from '@api/user';
+import { toast } from 'react-toastify';
+import { getInvitationInfo, getMinorCategoryInfo, putInvitationInfo } from '@api/user';
 import Button from '@components/common/Button';
 import { Target } from '@components/Icons';
 import useInvitationStore from '@store/invitationStore';
@@ -12,17 +13,19 @@ const MatchActive = () => {
   const {
     title: inviteTitle,
     taskRequestDto,
-    uuid,
+    uuid: inviteUuid,
     startTime: inviteStartTime,
     endTime: inviteEndTime,
   } = useInvitationStore();
   const {
+    uuid: invitedUuid,
     title: invitedTitle,
     myMinorCategory,
     invitationTasks,
     startTime: invitedStartTime,
     endTime: invitedEndTime,
   } = useInvitedStore();
+  const uuid = inviteUuid || invitedUuid;
 
   const [myTarget, setMyTarget] = useState<string | null>(null);
   const [rivalName, setRivalName] = useState<string | null>(null);
@@ -50,6 +53,7 @@ const MatchActive = () => {
   };
 
   const updateRemainingTime = () => {
+    if (isExpired) return;
     // ✅ UTC 시간을 명확하게 Date 객체로 변환 (ISO 8601 보장)
     const startTimeUTC = new Date((matchType.type === 'invite' ? inviteStartTime : invitedStartTime) + 'Z');
     const endTimeUTC = new Date((matchType.type === 'invite' ? inviteEndTime : invitedEndTime) + 'Z');
@@ -71,8 +75,17 @@ const MatchActive = () => {
     setRemainingTime(`${hours}:${minutes}:${seconds}`);
   };
 
+  const notify = (msg: string) => toast(msg);
+
+  const onFinish = async () => {
+    if (uuid) {
+      putInvitationInfo(uuid, matchType.type === 'invite' ? 0 : 1);
+      setIsExpired(true);
+      notify('챌린지 완료 🎇');
+    }
+  };
+
   useEffect(() => {
-    console.log({ taskRequestDto });
     if (matchType.type === 'invited') {
       setMyTarget(myMinorCategory);
       setRivalName(invitationTasks[0].nickname);
@@ -107,7 +120,7 @@ const MatchActive = () => {
 
       <div className="relative flex w-[70%] flex-col items-center justify-center gap-8">
         <div className="text-[40px] text-white">{remainingTime}</div>
-        <Button text="목표를 달성했어요!" />
+        {!isExpired && <Button text="목표를 달성했어요!" onClick={onFinish} />}
       </div>
 
       <div className="absolute bottom-10 flex w-[85%] justify-between rounded-[16px] bg-[#2E2E2E] px-6 py-4 text-[18px] text-gray200">

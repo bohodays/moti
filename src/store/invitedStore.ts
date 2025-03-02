@@ -73,7 +73,6 @@ const useInvitedStore = create<invitedState>(set => ({
   status: null,
 
   setInvitationInfo: info => {
-    console.log('info:', info); // info 데이터 확인
     set({
       uuid: info.uuid,
       title: info.title,

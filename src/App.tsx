@@ -5,7 +5,6 @@ import InviteRouter from './router/InviteRouter';
 
 function App() {
   const uuid = window.location.pathname.substring(1); // 첫 번째 "/" 제거
-  console.log(uuid);
 
   return <Providers>{uuid?.length < 10 ? <InviteRouter /> : <GuestRouter url={uuid} />}</Providers>;
 }

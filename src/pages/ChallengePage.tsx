@@ -40,9 +40,7 @@ const ChallengePage = () => {
       {step === Step.CUSTOM_CATEGORY && (
         <CustomCategory onNext={cmd => (cmd === 'next' ? setStep(Step.COMPLETE) : setStep(Step.MAJOR_CATEGORY))} />
       )}
-      {step === Step.COMPLETE && (
-        <Complete onNext={cmd => (cmd === 'next' ? console.log('TEST') : setStep(Step.MAJOR_CATEGORY))} />
-      )}
+      {step === Step.COMPLETE && <Complete onNext={cmd => (cmd === 'next' ? '' : setStep(Step.MAJOR_CATEGORY))} />}
     </div>
   );
 };
