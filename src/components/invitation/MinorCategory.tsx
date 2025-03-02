@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMajorCategoryInfo } from '@api/user';
+import { getMajorCategoryInfo, postRivalInvitation } from '@api/user';
 import Button from '@components/common/Button';
 import { BackIcon, QuestionMark, QuestionMark1, QuestionMark2, QuestionMark3 } from '@components/Icons';
 import useInvitedStore from '@store/invitedStore';
@@ -10,7 +10,7 @@ type CategoryType = {
   myNickname: string | null;
   majorCategory: string;
   minorCategories: minorCategory[];
-  onStepNext: (category: string) => void;
+  onStepNext: (category: string, id: number) => void;
   onNext: (cmd: string) => void;
 };
 
@@ -68,7 +68,7 @@ const Category = ({ majorCategory, minorCategories, onStepNext, onNext, myNickna
               <Button
                 text={item.name}
                 customButtonClassName="hover:text-gray700 bg-gray600 block h-[62px] rounded-[12px] text-white transition duration-300 ease-linear hover:bg-white"
-                onClick={() => onStepNext(item.name)}
+                onClick={() => onStepNext(item.name, item.id)}
               />
             </div>
           ))}
@@ -77,8 +77,8 @@ const Category = ({ majorCategory, minorCategories, onStepNext, onNext, myNickna
   );
 };
 
-export const MinorCategory = ({ onNext }: stepProps) => {
-  const { title, myNickname, invitationTasks, setMyMinorCategory } = useInvitedStore();
+export const MinorCategory = ({ onNext, uuid }: stepProps) => {
+  const { title, myNickname, invitationTasks, setMyMinorCategory, setMyMinorCategoryId } = useInvitedStore();
   const [majorCategory, setMajorCategory] = useState('');
   const [minorCategories, setMinorCategories] = useState<minorCategory[]>([]);
 
@@ -100,7 +100,22 @@ export const MinorCategory = ({ onNext }: stepProps) => {
     };
   }, []);
 
-  const onStepNext = (category: string) => {
+  const onPostRivalInvitation = async (uuid: string, id: number) => {
+    postRivalInvitation(uuid, {
+      majorCategoryId: invitationTasks[0].majorCategory.id,
+      minorCategoryId: id,
+      penaltyId: invitationTasks[0].penalty.id,
+      name: null,
+      nickname: myNickname,
+      penaltyName: invitationTasks[0].penalty.name,
+    });
+  };
+
+  const onStepNext = (category: string, id: number) => {
+    if (uuid) {
+      onPostRivalInvitation(uuid, id);
+    }
+    setMyMinorCategoryId(id);
     setMyMinorCategory(category);
     onNext('next');
   };

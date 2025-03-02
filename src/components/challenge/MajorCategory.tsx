@@ -5,9 +5,6 @@ import { BackIcon, QuestionMark, QuestionMark1, QuestionMark2, QuestionMark3 } f
 import useInvitationStore from '@store/invitationStore';
 import { majorCategory, stepProps } from 'src/types/common';
 
-// TODO
-// 스크롤 생기는 경우 체크해야 됨
-
 const MajorCategory = ({ onNext }: stepProps) => {
   const { setMajorCategoryId, title, setTitle } = useInvitationStore();
   const [majorCategory, setMajorCategory] = useState<majorCategory[]>([]);

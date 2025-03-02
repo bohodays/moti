@@ -44,7 +44,6 @@ const PenaltyChoice = ({ onNext }: stepProps) => {
         </div>
       </div>
 
-      {/* 스크롤 어떻게 구현할지 고민하기 */}
       <div
         className="flex h-[480px] w-full flex-col items-center justify-center gap-[20px] overflow-y-auto"
         style={{

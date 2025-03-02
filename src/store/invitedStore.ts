@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export type invitedState = {
   myNickname: string | null;
   myMinorCategory: string | null;
+  myMinorCategoryId: number | null;
   uuid: string | null;
   title: string | null;
   description: string | null;
@@ -27,18 +28,22 @@ export type invitedState = {
       certificationPhoto: null;
     },
   ];
-  startTime: Date | null;
-  endTime: Date | null;
+  startTime: string | null;
+  endTime: string | null;
   status: string | null;
 
-  setInvitationInfo: (info: Omit<invitedState, 'setInvitationInfo | setNickname | setMyMinorCategory'>) => void;
+  setInvitationInfo: (
+    info: Omit<invitedState, 'setInvitationInfo | setNickname | setMyMinorCategory | setMyMinorCategoryId'>
+  ) => void;
   setMyNickname: (name: string | null) => void;
   setMyMinorCategory: (name: string | null) => void;
+  setMyMinorCategoryId: (id: number | null) => void;
 };
 
 const useInvitedStore = create<invitedState>(set => ({
   myNickname: null,
   myMinorCategory: null,
+  myMinorCategoryId: null,
   uuid: null,
   title: null,
   description: null,
@@ -83,6 +88,8 @@ const useInvitedStore = create<invitedState>(set => ({
   setMyNickname: name => set({ myNickname: name }),
 
   setMyMinorCategory: category => set({ myMinorCategory: category }),
+
+  setMyMinorCategoryId: id => set({ myMinorCategoryId: id }),
 }));
 
 export default useInvitedStore;

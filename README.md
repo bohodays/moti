@@ -12,16 +12,50 @@
 
 - https://www.youtube.com/watch?v=NwLWX2RNVcw&t=436s
 
+```typescript
+  import React, { useState } from 'react';
+  import Invitation from '@components/invitation/Invitation';
+  import { MinorCategory } from '@components/invitation/MinorCategory';
+  import Nickname from '@components/invitation/Nickname';
+  import Complete from '@components/invitation/Complete';
+
+  enum Step {
+    INVITATION = 'invitation',
+    NICKNAME = 'nickname',
+    MINOR_CATEGORY = 'minorCategory',
+    COMPLETE = 'complete',
+  }
+
+  const InvitePage = ({ uuid }: { uuid: string }) => {
+    const [step, setStep] = useState<Step>(Step.INVITATION);
+
+    return (
+      <div>
+        {step === Step.INVITATION && <Invitation onNext={() => setStep(Step.NICKNAME)} />}
+        {step === Step.NICKNAME && (
+          <Nickname onNext={cmd => (cmd === 'next' ? setStep(Step.MINOR_CATEGORY) : setStep(Step.INVITATION))} />
+        )}
+        {step === Step.MINOR_CATEGORY && (
+          <MinorCategory uuid={uuid} onNext={cmd => (cmd === 'next' ? setStep(Step.COMPLETE) : setStep(Step.NICKNAME))} />
+        )}
+        {step === Step.COMPLETE && <Complete />}
+      </div>
+    );
+  };
+
+  export default InvitePage;
+```
+
 <br>
 
 ### TODO
 
 - [x] vercel proxy 설정
   - 로컬 환경에서 정상적으로 api요청 및 응답을 받았지만 배포되면 proxy 설정에 문제가 생겼음. vercel.json에 proxy 설정을 해야 된다는 것을 확인 후 적용함.
-- [ ] 배포 환경과 개발 환경에서 환경변수 분리하기
-- [ ] css 이미지 애니메이션 tailwinds로 적용해보기
+- [x] 배포 환경과 개발 환경에서 환경변수 분리하기
 - [ ] React-Query 적용해보기
-- [ ] 각 페이지의 step을 enum 형태로 저장하기
+- [x] 각 페이지의 step을 enum 형태로 저장하기
 - [ ] suspensive 라이브러리로 에러 처리하기
-- [ ] 배포 시 코드(source map) 비노출화 적용하기
-- [ ] 배포 시 코드 난독화 적용하기
+- [x] 배포 시 코드(source map) 비노출화 적용하기
+- [x] 배포 시 코드 난독화 적용하기
+- [ ] 복사된 링크 공유 시 OG이미지 처리하기

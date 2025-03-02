@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
+import Complete from '@components/invitation/Complete';
 import Invitation from '@components/invitation/Invitation';
 import { MinorCategory } from '@components/invitation/MinorCategory';
 import Nickname from '@components/invitation/Nickname';
 
-const InvitePage = () => {
-  const [step, setStep] = useState<'invitation' | 'nickname' | 'minorCategory' | 'complete'>('invitation');
+enum Step {
+  INVITATION = 'invitation',
+  NICKNAME = 'nickname',
+  MINOR_CATEGORY = 'minorCategory',
+  COMPLETE = 'complete',
+}
+
+const InvitePage = ({ uuid }: { uuid: string }) => {
+  const [step, setStep] = useState<Step>(Step.INVITATION);
 
   return (
     <div>
-      {step === 'invitation' && <Invitation onNext={() => setStep('nickname')} />}
-      {step === 'nickname' && (
-        <Nickname onNext={cmd => (cmd === 'next' ? setStep('minorCategory') : setStep('invitation'))} />
+      {step === Step.INVITATION && <Invitation onNext={() => setStep(Step.NICKNAME)} />}
+      {step === Step.NICKNAME && (
+        <Nickname onNext={cmd => (cmd === 'next' ? setStep(Step.MINOR_CATEGORY) : setStep(Step.INVITATION))} />
       )}
-      {step === 'minorCategory' && (
-        <MinorCategory onNext={cmd => (cmd === 'next' ? setStep('complete') : setStep('nickname'))} />
+      {step === Step.MINOR_CATEGORY && (
+        <MinorCategory uuid={uuid} onNext={cmd => (cmd === 'next' ? setStep(Step.COMPLETE) : setStep(Step.NICKNAME))} />
       )}
+      {step === Step.COMPLETE && <Complete />}
     </div>
   );
 };

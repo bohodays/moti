@@ -1,4 +1,4 @@
-import { invitationType } from 'src/types/common';
+import { invitationType, rivalInvitationType } from 'src/types/common';
 import axiosInstance from './axiosInstance';
 
 export const getPenaltyAll = async () => {
@@ -74,6 +74,16 @@ export const postInvitation = async (invitationInfo: invitationType) => {
 export const getInvitationInfo = async (uuid: string) => {
   try {
     const response = await axiosInstance.get(`/v1/invitation/${uuid}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('api error');
+  }
+};
+
+export const postRivalInvitation = async (uuid: string, rivalInvitationInfo: rivalInvitationType) => {
+  try {
+    const response = await axiosInstance.post(`/v1/invitation/${uuid}/task/1`, rivalInvitationInfo);
     return response.data;
   } catch (error) {
     console.error(error);

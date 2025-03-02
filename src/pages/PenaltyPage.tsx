@@ -1,37 +1,46 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import MatchLink from '@components/penalty/MatchLink';
 import PenaltyChoice from '@components/penalty/PenaltyChoice';
 import PenaltySetting from '@components/penalty/PenaltySetting';
 import SubMain from '@components/penalty/SubMain';
 import TimeSetting from '@components/penalty/TimeSetting';
 
+enum Step {
+  SUB_MAIN = 'subMain',
+  TIME_SETTING = 'timeSetting',
+  PENALTY_CHOICE = 'penaltyChoice',
+  PENALTY_SETTING = 'penaltySetting',
+  MATCH_LINK = 'matchLink',
+}
+
 const PenaltyPage = () => {
-  const [step, setStep] = useState<'subMain' | 'timeSetting' | 'penaltyChoice' | 'penaltySetting' | 'matchLink'>(
-    'subMain'
-  );
+  const location = useLocation();
+  const { target } = location.state || {};
+  const [step, setStep] = useState<Step>(target === 'subMain' ? Step.SUB_MAIN : Step.TIME_SETTING);
 
   return (
     <div>
-      {step === 'subMain' && <SubMain onNext={() => setStep('timeSetting')} />}
-      {step === 'timeSetting' && (
-        <TimeSetting onNext={cmd => (cmd === 'next' ? setStep('penaltyChoice') : setStep('subMain'))} />
+      {step === Step.SUB_MAIN && <SubMain onNext={() => setStep(Step.TIME_SETTING)} />}
+      {step === Step.TIME_SETTING && (
+        <TimeSetting onNext={cmd => (cmd === 'next' ? setStep(Step.PENALTY_CHOICE) : setStep(Step.SUB_MAIN))} />
       )}
-      {step === 'penaltyChoice' && (
+      {step === Step.PENALTY_CHOICE && (
         <PenaltyChoice
           onNext={cmd =>
             cmd === '2stepNexp'
-              ? setStep('matchLink')
+              ? setStep(Step.MATCH_LINK)
               : cmd === 'next'
-                ? setStep('penaltySetting')
-                : setStep('timeSetting')
+                ? setStep(Step.PENALTY_SETTING)
+                : setStep(Step.TIME_SETTING)
           }
         />
       )}
-      {step === 'penaltySetting' && (
-        <PenaltySetting onNext={cmd => (cmd === 'next' ? setStep('matchLink') : setStep('penaltyChoice'))} />
+      {step === Step.PENALTY_SETTING && (
+        <PenaltySetting onNext={cmd => (cmd === 'next' ? setStep(Step.MATCH_LINK) : setStep(Step.PENALTY_CHOICE))} />
       )}
-      {step === 'matchLink' && (
-        <MatchLink onNext={cmd => (cmd === 'next' ? setStep('matchLink') : setStep('penaltyChoice'))} />
+      {step === Step.MATCH_LINK && (
+        <MatchLink onNext={cmd => (cmd === 'next' ? setStep(Step.MATCH_LINK) : setStep(Step.PENALTY_CHOICE))} />
       )}
     </div>
   );

@@ -11,6 +11,7 @@ export type ButtonProps = {
 
 export type stepProps = {
   onNext: (step?: string) => void;
+  uuid?: string;
 };
 
 export type majorCategory = {
@@ -34,5 +35,14 @@ export type invitationType = {
     nickname: string | null;
     penaltyName: string | null;
   };
-  endTime: number | null;
+  durationMinutes: number | null;
+};
+
+export type rivalInvitationType = {
+  majorCategoryId: number | null;
+  minorCategoryId: number | null;
+  penaltyId: number | null;
+  name: string | null;
+  nickname: string | null;
+  penaltyName: string | null;
 };

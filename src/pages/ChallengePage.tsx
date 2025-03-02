@@ -6,35 +6,42 @@ import { MinorCategory } from '@components/challenge/MinorCategory';
 import Nickname from '@components/challenge/Nickname';
 import SubMain from '@components/challenge/SubMain';
 
+enum Step {
+  SUB_MAIN = 'subMain',
+  NICKNAME = 'nickname',
+  MAJOR_CATEGORY = 'majorCategory',
+  MINOR_CATEGORY = 'minorCategory',
+  CUSTOM_CATEGORY = 'customCategory',
+  COMPLETE = 'complete',
+}
+
 const ChallengePage = () => {
-  const [step, setStep] = useState<
-    'subMain' | 'nickname' | 'majorCategory' | 'minorCategory' | 'customCategory' | 'complete'
-  >('subMain');
+  const [step, setStep] = useState<Step>(Step.SUB_MAIN);
   return (
     <div>
-      {step === 'subMain' && <SubMain onNext={() => setStep('nickname')} />}
-      {step === 'nickname' && (
-        <Nickname onNext={cmd => (cmd === 'next' ? setStep('majorCategory') : setStep('subMain'))} />
+      {step === Step.SUB_MAIN && <SubMain onNext={() => setStep(Step.NICKNAME)} />}
+      {step === Step.NICKNAME && (
+        <Nickname onNext={cmd => (cmd === 'next' ? setStep(Step.MAJOR_CATEGORY) : setStep(Step.SUB_MAIN))} />
       )}
-      {step === 'majorCategory' && (
+      {step === Step.MAJOR_CATEGORY && (
         <MajorCategory
           onNext={cmd =>
             cmd === '2stepNext'
-              ? setStep('customCategory')
+              ? setStep(Step.CUSTOM_CATEGORY)
               : cmd === 'next'
-                ? setStep('minorCategory')
-                : setStep('nickname')
+                ? setStep(Step.MINOR_CATEGORY)
+                : setStep(Step.NICKNAME)
           }
         />
       )}
-      {step === 'minorCategory' && (
-        <MinorCategory onNext={cmd => (cmd === 'next' ? setStep('complete') : setStep('majorCategory'))} />
+      {step === Step.MINOR_CATEGORY && (
+        <MinorCategory onNext={cmd => (cmd === 'next' ? setStep(Step.COMPLETE) : setStep(Step.MAJOR_CATEGORY))} />
       )}
-      {step === 'customCategory' && (
-        <CustomCategory onNext={cmd => (cmd === 'next' ? setStep('complete') : setStep('majorCategory'))} />
+      {step === Step.CUSTOM_CATEGORY && (
+        <CustomCategory onNext={cmd => (cmd === 'next' ? setStep(Step.COMPLETE) : setStep(Step.MAJOR_CATEGORY))} />
       )}
-      {step === 'complete' && (
-        <Complete onNext={cmd => (cmd === 'next' ? console.log('TEST') : setStep('majorCategory'))} />
+      {step === Step.COMPLETE && (
+        <Complete onNext={cmd => (cmd === 'next' ? console.log('TEST') : setStep(Step.MAJOR_CATEGORY))} />
       )}
     </div>
   );

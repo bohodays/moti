@@ -18,8 +18,8 @@ const Invitation = ({ onNext }: stepProps) => {
     if (title) {
       setMinorCategory(title);
     } else {
-      if (invitationTasks[0]?.minorCategory.name) {
-        setMinorCategory(invitationTasks[0]?.minorCategory.name);
+      if (invitationTasks[0]?.majorCategory.name) {
+        setMinorCategory(invitationTasks[0]?.majorCategory.name);
       }
     }
 

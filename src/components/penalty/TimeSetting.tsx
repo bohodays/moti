@@ -34,7 +34,13 @@ const TimeSetting = ({ onNext }: stepProps) => {
 
   const onStepNext = () => {
     if (setEndTime) {
-      setEndTime(hour * 60 + min);
+      if (hour && min) {
+        setEndTime(hour * 60 + min);
+      } else if (hour && !min) {
+        setEndTime(hour * 60);
+      } else if (!hour && min) {
+        setEndTime(min);
+      }
       onNext('next');
     }
   };
@@ -60,7 +66,7 @@ const TimeSetting = ({ onNext }: stepProps) => {
             <input
               id="hour"
               type="number"
-              value={hour}
+              value={hour.toString().padStart(2, '0')}
               ref={hourInput}
               className="mr-[8px] h-[48px] w-[68px] rounded-[24px] border-none bg-gray600 text-center text-[30px] caret-transparent outline-none focus:text-green500"
               onChange={e => onValidationTime('hour', e.target.value)}

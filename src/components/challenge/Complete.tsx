@@ -11,8 +11,10 @@ const Complete = ({ onNext }: stepProps) => {
   const [mainTitle, setMainTitle] = useState('');
   const navigate = useNavigate();
 
-  const onMoveNextPage = () => {
-    navigate('/penalty');
+  const onMoveNextPage = (type: string) => {
+    navigate('/penalty', {
+      state: { target: type === 'complete' ? 'subMain' : 'timeSetting' },
+    });
   };
 
   useEffect(() => {
@@ -50,13 +52,13 @@ const Complete = ({ onNext }: stepProps) => {
           text="완료"
           customWrapperClassName="w-[35%]"
           customButtonClassName="w-[90%] bg-white"
-          onClick={onMoveNextPage}
+          onClick={() => onMoveNextPage('complete')}
         />
         <Button
           text="친구랑 대결하기"
           customWrapperClassName="w-[65%]"
           customButtonClassName="w-[90%]"
-          onClick={() => onNext('next')}
+          onClick={() => onMoveNextPage('share')}
         />
       </div>
     </div>

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { getMinorCategoryInfo, getPenaltyInfo, postInvitation } from '@api/user';
 import Button from '@components/common/Button';
 import { BackIcon, ExclamationMarkIcon, Match } from '@components/Icons';
@@ -6,9 +8,10 @@ import useInvitationStore from '@store/invitationStore';
 import { stepProps } from 'src/types/common';
 
 const MatchLink = ({ onNext }: stepProps) => {
-  const { title, description, taskRequestDto } = useInvitationStore();
+  const { title, description, taskRequestDto, setUuid, endTime, setEndTime, setStartTime } = useInvitationStore();
   const [category, setCategory] = useState('');
   const [penalty, setPenalty] = useState('');
+  const navigate = useNavigate();
 
   const onGetMajorCategoryAll = async () => {
     if (taskRequestDto.minorCategoryId) {
@@ -24,21 +27,26 @@ const MatchLink = ({ onNext }: stepProps) => {
     }
   };
 
-  const onMakeLink = async () => {
-    const response = await postInvitation({ title, description, taskRequestDto, endTime: null });
+  const notify = (msg: string) => toast(msg);
 
-    console.log({ response });
-    // TODO 도메인 주소 변수로 저장하기
-    // TODO alert를 toast로 변경하기
-    // const link = `https://moti-beta.vercel.app/${response.response.uuid}`; // 배포주소
-    const link = `http://localhost:5173/${response.response.uuid}`; // 로컬주소
+  const onMakeLink = async () => {
+    const response = await postInvitation({ title, description, taskRequestDto, durationMinutes: endTime as number });
+
+    setUuid(response.response.uuid);
+    setStartTime(response.response.startTime);
+    setEndTime(response.response.endTime);
+
+    const link = import.meta.env.DEV
+      ? `${import.meta.env.VITE_DEV_URL}/${response.response.uuid}`
+      : `${import.meta.env.VITE_PROD_URL}/${response.response.uuid}`;
 
     try {
       await navigator.clipboard.writeText(link);
-      alert('복사에 성공했습니다.');
+      notify('링크가 복사되었습니다! 친구에게 공유하세요 😊');
+      navigate('/match/active', { state: { type: 'invite' } });
     } catch (error) {
-      console.error('클립보드 복사 실패', error);
-      alert('복사에 실패했습니다.');
+      console.log(error);
+      notify('링크가 복사되지 않았습니다. 새로고침해주세요.');
     }
   };
 

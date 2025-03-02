@@ -38,4 +38,15 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    sourcemap: false,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // console.log 제거
+        drop_debugger: true, // debugger 제거
+      },
+      mangle: true, // 변수명 난독화
+    },
+  },
 });

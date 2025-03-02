@@ -6,6 +6,7 @@ import Layout from 'src/layout/Layout';
 
 // lazy loading
 const InvitePage = lazy(() => import('src/pages/InvitePage'));
+const MatchActive = lazy(() => import('src/pages/MatchActive'));
 
 const GuestRouter = ({ url }: { url: string }) => {
   const { setInvitationInfo } = useInvitedStore();
@@ -23,7 +24,9 @@ const GuestRouter = ({ url }: { url: string }) => {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path={`/${url}`} element={<InvitePage />} />
+          <Route path={`/${url}`} element={<InvitePage uuid={url} />} />
+
+          <Route path="/match/active" element={<MatchActive />} />
 
           <Route path="*" element={<div>Not Found</div>} />
         </Route>

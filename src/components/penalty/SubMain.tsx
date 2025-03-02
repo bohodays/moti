@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getMinorCategoryInfo } from '@api/user';
 import Button from '@components/common/Button';
 import { ClockIcon } from '@components/Icons';
@@ -8,12 +9,17 @@ import { stepProps } from 'src/types/common';
 const SubMain = ({ onNext }: stepProps) => {
   const { title, taskRequestDto } = useInvitationStore();
   const [category, setCategory] = useState('');
+  const navigate = useNavigate();
 
   const onGetCategory = async () => {
     if (taskRequestDto.minorCategoryId) {
       const response = await getMinorCategoryInfo(taskRequestDto.minorCategoryId);
       setCategory(response.name);
     }
+  };
+
+  const onMoveMain = () => {
+    navigate('/');
   };
 
   useEffect(() => {
@@ -34,7 +40,7 @@ const SubMain = ({ onNext }: stepProps) => {
         <div className="text-[22px] text-white">{category}</div>
       </div>
 
-      <Button text="목표를 달성했어요" customWrapperClassName="absolute bottom-[5.2rem]" />
+      <Button text="목표를 달성했어요" customWrapperClassName="absolute bottom-[5.2rem]" onClick={onMoveMain} />
       <button className="absolute bottom-10 text-[18px] text-gray200" onClick={() => onNext()}>
         {'친구와 대결하기 >'}
       </button>
