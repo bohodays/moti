@@ -73,6 +73,11 @@ const MatchActive = () => {
 
     // ✅ UI에 KST 기준으로 남은 시간 표시
     setRemainingTime(`${hours}:${minutes}:${seconds}`);
+
+    if (diffInSeconds === 0) {
+      setIsExpired(true);
+      return;
+    }
   };
 
   const notify = (msg: string) => toast(msg);
